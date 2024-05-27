@@ -7,5 +7,8 @@
     @apply bg-mycolor1 dark:bg-mycolor2 !important;
   }
   .textone{
-    @apply text-mycolor2 dark:text-mycolor1;
+    @apply text-mycolor2 dark:text-mycolor1 !important;
+  }
+  .validationLogin{
+    @apply text-mycolor3 dark:text-mycolor3 !important;
   }
