@@ -18,6 +18,15 @@ const config = {
       },
     },
     extend: {
+      colors:{
+        mycolor1 :'#F4F4F4',
+        mycolor2 :'#201F1F',
+        mycolor3 :'#E21818',
+        mycolor4 : '#00235B',
+        mycolor5: '#FFDD83',
+        mycolor6 : '#98DFD6'
+
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

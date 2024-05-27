@@ -2,3 +2,10 @@
   @tailwind components;
   @tailwind utilities;
   
+
+  .bgone{
+    @apply bg-mycolor1 dark:bg-mycolor2 !important;
+  }
+  .textone{
+    @apply text-mycolor2 dark:text-mycolor1;
+  }
