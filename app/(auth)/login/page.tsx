@@ -16,6 +16,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from '@/components/ui/label'
 import Link from 'next/link'
+import useAuthStore from '@/hooks/useAuth'
+import { useToast } from '@/components/ui/use-toast'
+import { useRouter } from 'next/navigation'
+import loginUser from '@/actions/login'
+import { startSession } from '@/lib/session'
+import { Loader2Icon } from 'lucide-react'
 
 
 const formSchema = z.object({
@@ -28,6 +34,9 @@ const formSchema = z.object({
 })
 
 const LoginPage = () => {
+  const {loader, setLoader} = useAuthStore();
+  const { toast } = useToast()
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -37,10 +46,32 @@ const LoginPage = () => {
     },
   })
 
-  const onSubmit=()=>{
+  const onSubmit=(data:z.infer<typeof formSchema>)=>{
+    setLoader(true);
+
+    loginUser(data.email, data.password).then(
+      (resp)=>{
+        startSession(resp.user, resp.jwt);
+        toast({
+          variant:"success",
+          title: "Account Created",
+        })
+        setLoader(false);
+        router.push("/")
+      },
+      (error)=>{
+        setLoader(false);
+        toast({
+          variant:"destructive",
+          title: "Something went wrong",
+        })
+
+      }
+    ).finally(()=>{
+      setLoader(false)
+    })
 
   }
-
   return (
     <Form {...form}>
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-4/5">
@@ -72,7 +103,10 @@ const LoginPage = () => {
         )}
       />
 
-      <Button className='w-full' type="submit">Submit</Button>
+      <Button className='w-full' type="submit">
+      {loader? <Loader2Icon className='animate-spin'/> :"Login"}
+
+      </Button>
     </form>
     <div className='mt-8 '>
       <Label className='flex flex-col items-center'>
