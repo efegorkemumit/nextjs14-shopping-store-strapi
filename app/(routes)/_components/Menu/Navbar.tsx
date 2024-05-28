@@ -8,6 +8,7 @@ import { getCategories } from '@/actions/getCategories'
 import { ModeToggle } from '@/components/ModeToggle'
 import Link from 'next/link'
 import NavSkeleton from '../Skeleton/NavSkeleton'
+import MobileMenu from './MobileMenu'
 
 const Navbar = () => {
 
@@ -40,6 +41,9 @@ const Navbar = () => {
           <Cart/>
           <UserMenu/>
           <ModeToggle/>
+          <div className='flex lg:hidden'>
+            <MobileMenu categories={categories}/>
+          </div>
 
 
         </div>
