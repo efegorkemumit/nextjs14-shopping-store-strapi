@@ -8,3 +8,13 @@ export type Category={
         };
     }
 }
+
+export type Slider={
+    id:number;
+    attributes:{
+        link:string;
+        media:{
+            url:string;
+        };
+    }
+}
