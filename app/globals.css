@@ -12,3 +12,6 @@
   .validationLogin{
     @apply text-mycolor3 dark:text-mycolor3 !important;
   }
+  .borderone{
+    @apply border-slate-300 dark:border-slate-500
+  }
