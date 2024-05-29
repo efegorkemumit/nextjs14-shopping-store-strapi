@@ -20,7 +20,7 @@ const RecentProduct = () => {
     useEffect(()=>{
         const fetchProducts = async()=>{
           try {
-            const products = await getProducts("/products?sort[0]=id:desc&filters[isTop]=true&pagination[start]=0&pagination[limit]=8&populate=*");
+            const products = await getProducts("/products?sort[0]=id:desc&filters[recent]=true&pagination[start]=0&pagination[limit]=8&populate=*");
             setProducts(products);
           } catch (error) {
             console.error('Failed to fetch products', error);
