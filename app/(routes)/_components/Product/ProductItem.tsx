@@ -21,7 +21,7 @@ interface ProductItemProps{
 const ProductItem = ({product}:ProductItemProps) => {
   return (
     <div className='group p-2 md:p-4 lg:p-6 flex flex-col items-center justify-center gap-4 border
-    borderone bgone rounded-xl hover:shadow-lg transition-all cursor-pointer duration-300'>
+    borderone lg:h-[450px] bgone rounded-xl hover:shadow-lg transition-all cursor-pointer duration-300'>
         <ProductImages
         images={product?.attributes?.images}
         />
