@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import ProductDetailSkeleton from '../../_components/Skeleton/ProductDetailSkeleton';
 import ProductImages from '../../_components/Product/ProductImages';
 import ProductForm from '../../_components/Product/ProductForm';
+import RecentProduct from '../../_components/Product/RecentProduct';
 
 interface ProductDetailPageProps{
     params : {
@@ -73,7 +74,7 @@ const ProductDetailPage = ({params}:ProductDetailPageProps) => {
         </div>
 
     )}
-   
+   <RecentProduct/>
 
     </>
   )
