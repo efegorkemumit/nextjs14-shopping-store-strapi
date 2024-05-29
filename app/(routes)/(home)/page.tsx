@@ -5,6 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 import Image from "next/image";
 import Slider from "../_components/Slider";
 import CategoryList from "../_components/CategoryList";
+import ProductList from "../_components/Product/ProductList";
 
 export default function Home() {
   const { toast } = useToast()
@@ -14,7 +15,7 @@ export default function Home() {
   <>
     <Slider/>
     <CategoryList/>
-  
+    <ProductList/>
   </>
   );
 }
