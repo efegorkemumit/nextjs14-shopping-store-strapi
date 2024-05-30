@@ -59,7 +59,7 @@ const Navbar = () => {
           <NavSkeleton/>
         ):(
           categories.map((category)=>(
-            <Link href={`/category/`+category.attributes.slug} key={category.id}>
+            <Link href={`/search?category=`+category.attributes.slug} key={category.id}>
               {category.attributes.name}
             
             </Link>

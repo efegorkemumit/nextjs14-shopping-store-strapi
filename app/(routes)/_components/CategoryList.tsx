@@ -37,8 +37,8 @@ const CategoryList = () => {
             <div className='grid mt-8 grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6
             xl:grid-cols-7 gap-4'>
                 {categories.map((category)=>(
-                    <Link href={'/category/' + category.attributes.slug}  key={category.id}
-                    className='flex flex-col rounded-xl gap-2 items-center p-3 border borderone cursor-pointer'>
+            <Link href={`/search?category=`+category.attributes.slug} key={category.id}
+            className='flex flex-col rounded-xl gap-2 items-center p-3 border borderone cursor-pointer'>
 
                         <Image
                         alt=''

@@ -31,8 +31,8 @@ const MobileMenu = ({categories}:MobileMenuProps) => {
 
    
     {categories.map((category)=>(
-            <Link href={`/category/`+category.attributes.slug} key={category.id}>
-              {category.attributes.name}
+            <Link href={`/search?category=`+category.attributes.slug} key={category.id}>
+            {category.attributes.name}
             
             </Link>
           ))}
