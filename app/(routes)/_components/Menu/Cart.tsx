@@ -16,6 +16,7 @@ import {
 import { ShoppingBag } from 'lucide-react'
 import useCartStore from '@/hooks/useCartStore'
 import { useRouter } from 'next/navigation'
+import CartItem from './CartItem'
 
 interface CartProps{
   jwt:string;
@@ -41,6 +42,10 @@ const Cart = ({jwt,userId}:CartProps) => {
   },[items])
 
   console.log(items);
+
+  const onDeleteItem=(id)=>{
+
+  }
   return (
     <Sheet>
   <SheetTrigger>
@@ -65,7 +70,7 @@ const Cart = ({jwt,userId}:CartProps) => {
           ):(
             <ul>
               {items.map((item)=>(
-                <div>asd</div>
+                <CartItem key={item.id}  item={item} onDeleteItem={onDeleteItem}/>
               ))}
             </ul>
           )}

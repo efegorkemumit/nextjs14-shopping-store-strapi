@@ -38,12 +38,14 @@ const Navbar = () => {
     let userId = '';
 
     try {
+      if(typeof window !="undefined"){
       jwt = localStorage.getItem("jwt") || "";
       user = localStorage.getItem('user') || '';
       if (user) {
         const userObj = JSON.parse(user);
         userId = userObj.id;
       }
+    }
     } catch (e) {
       console.error('Error:', e);
     }
