@@ -17,6 +17,7 @@ import { ShoppingBag } from 'lucide-react'
 import useCartStore from '@/hooks/useCartStore'
 import { useRouter } from 'next/navigation'
 import CartItem from './CartItem'
+import { DeleteToCart } from '@/actions/cart/deleteToCart'
 
 interface CartProps{
   jwt:string;
@@ -43,7 +44,9 @@ const Cart = ({jwt,userId}:CartProps) => {
 
   console.log(items);
 
-  const onDeleteItem=(id)=>{
+  const onDeleteItem= async(id)=>{
+    await DeleteToCart(id,jwt)
+    fetchItems(userId,jwt)
 
   }
   return (
