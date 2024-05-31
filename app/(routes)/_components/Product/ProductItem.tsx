@@ -60,7 +60,7 @@ const ProductItem = ({product}:ProductItemProps) => {
         </Dialog>
 
         <Button asChild>
-            <Link href={`product/${product?.attributes?.slug}`}>
+            <Link href={`/product/${product?.attributes?.slug}`}>
             Detail
             </Link>
 

@@ -14,6 +14,8 @@ import { Loader2Icon, Minus, PlusIcon } from 'lucide-react';
 import Link from 'next/link';
 import { AddToCart } from '@/actions/cart/addToCart';
 import { useToast } from '@/components/ui/use-toast';
+import useCartStore from '@/hooks/useCartStore';
+import { useRouter } from 'next/navigation';
 
 interface ProductForm{
     product:Product;
@@ -22,6 +24,9 @@ interface ProductForm{
 const ProductForm = ({product,btnVisible}:ProductForm) => {
 
     const [loading,setLoading]=useState(false);
+
+    const fetchItems = useCartStore((state)=>state.fetchItems);
+    const router = useRouter();
 
     const { toast } = useToast()
 
@@ -61,6 +66,10 @@ const ProductForm = ({product,btnVisible}:ProductForm) => {
 
     const onAddCart = async()=>{
 
+        if(!userId && !jwt){
+            router.push("/login")
+        }
+
         if(!selectedColor || !selectedSize){
             toast({
                 title: "Color and Size required ",
@@ -86,6 +95,7 @@ const ProductForm = ({product,btnVisible}:ProductForm) => {
 
             console.log(data.data)
             await AddToCart(data, jwt)
+            fetchItems(userId,jwt)
             toast({
                 title: "Add to Cart ",
                 variant:"success"
