@@ -93,7 +93,6 @@ const ProductForm = ({product,btnVisible}:ProductForm) => {
                 }      
             }
 
-            console.log(data.data)
             await AddToCart(data, jwt)
             fetchItems(userId,jwt)
             toast({

@@ -42,7 +42,6 @@ const Cart = ({jwt,userId}:CartProps) => {
     setSubTotal(total.toFixed(2))
   },[items])
 
-  console.log(items);
 
   const onDeleteItem= async(id)=>{
     await DeleteToCart(id,jwt)
