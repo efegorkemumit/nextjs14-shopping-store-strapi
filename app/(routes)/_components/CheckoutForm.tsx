@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -16,6 +16,8 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useToast } from '@/components/ui/use-toast'
+import axios from 'axios'
 
 const formSchema = z.object({
     name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -28,13 +30,22 @@ const formSchema = z.object({
     cvc: z.string().regex(/^\d{3,4}$/, { message: "CVC must be 3 or 4 digits." })
   })
 
-const Checkoutform = () => {
+interface CheckoutFormProps{
+  subtotal:string;
+}
+
+const Checkoutform = ({subtotal}:CheckoutFormProps) => {
     const { items } = useCartStore()
+    console.log(items);
+    const [response, setResponse] = useState(null);
+    const { toast } = useToast()
+
+
 
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
-          name: "Efe Görkem",
+          name: "Efe Görkem Ümit",
           phone: "+90 555 222 11 22",
           address: "ıstanbul Turkey",
           holdername: "Gorkem ",
@@ -45,8 +56,105 @@ const Checkoutform = () => {
         }
       })
 
-    const onSubmit = (data) => {
-        console.log(data)
+    const onSubmit = async(data) => {
+      const paymentCard = {
+        cardHolderName: data.holdername,
+        cardNumber: data.ccnumber,
+        expireMonth: data.month,
+        expireYear: data.year,
+        cvc: data.cvc,
+        registerCard: '0'
+      };
+
+    const buyer = {
+        id: 'BY789',
+        name: data.name,
+        surname: 'Youtube',
+        gsmNumber: data.phone,
+        email: 'john.doe@example.com',
+        identityNumber: '74300864791',
+        lastLoginDate: '2015-10-05 12:43:35',
+        registrationDate: '2013-04-21 15:12:09',
+        registrationAddress: data.address,
+        ip: '85.34.78.112',
+        city: 'Istanbul',
+        country: 'Turkey',
+        zipCode: '34732'
+    };
+
+    const shippingAddress = {
+        contactName: data.name,
+        city: 'Istanbul',
+        country: 'Turkey',
+        address: data.address,
+        zipCode: '34742'
+    };
+
+    const billingAddress = {
+      contactName: data.name,
+      city: 'Istanbul',
+      country: 'Turkey',
+      address: data.address,
+      zipCode: '34742'
+    };
+
+    const basketItems = items.map(item=>({
+      id: item.id,
+      name: item.name,
+      category1: 'Collectibles',
+      category2: 'Accessories',
+      itemType: 'PHYSICAL',
+      price: item.amount
+
+    }));
+
+    
+
+    const paymentData = {
+        price: subtotal,
+        paidPrice: subtotal,
+        currency: 'TRY',
+        basketId: 'B67832',
+        paymentCard: paymentCard,
+        buyer: buyer,
+        shippingAddress: shippingAddress,
+        billingAddress: billingAddress,
+        basketItems: basketItems
+    };
+
+    try {
+        const response = await axios.post('http://localhost:3001/api/payment', paymentData, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        setResponse(response.data);
+
+        if(response.data.status === "success"){
+            toast({
+              variant: "success",
+              title: "Order Success",
+            })
+
+        }
+        else{
+          toast({
+            variant: "destructive",
+            title: "Order Error",
+          })
+
+        }
+
+    } catch (error) {
+        toast({
+          variant: "destructive",
+          title: "Order Error" +error,
+        })
+        console.error('Error:', error);
+    }
+
+
     }
 
 

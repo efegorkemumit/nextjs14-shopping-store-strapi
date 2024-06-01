@@ -51,7 +51,7 @@ const CheckoutPage = () => {
     <div className='container mt-8 mb-8'>
         <div className='grid grid-cols-1 lg:grid-cols-4 gap-8'>
             <div className='col-span-1 lg:col-span-3 bgone border borderone rounded-md lg:h-screen'>
-                <Checkoutform/>
+                <Checkoutform subtotal={subtotal} />
             </div>
 
             <div className='col-span-1 bgone border borderone justify-center items-center rounded-md lg:h-screen'>
