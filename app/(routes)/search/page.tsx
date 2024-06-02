@@ -45,6 +45,7 @@ const SearchPage = () => {
     const [page, setPage] = useState(parseInt(searchParams.get('page')) || 1);
     const [pageSize] = useState(8);
     const [totalPages, setTotalPages] = useState(1);
+    const [debounceTimeout, setDebounceTimeout] = useState(null);
 
     useEffect(()=>{
         fetchColorsSizesCategorys();
@@ -136,14 +137,19 @@ const SearchPage = () => {
     }
 
 
-    useEffect(()=>{
-        const delayDebounceFn= setTimeout(() => {
-            updateURL("q", search)
-        }, 2000);
-    }, [search]);
 
     const handleSearchChange = (e)=>{
-        setSearch(e.target.value);
+        const value = e.target.value;
+        setSearch(value);
+        if(debounceTimeout){
+            clearTimeout(debounceTimeout)
+        }
+        const timeout = setTimeout(()=>{
+            updateURL("q", value);
+        }, 2000);
+
+        setDebounceTimeout(timeout)
+      
     }
 
     const handleColorChange = (value)=>{
