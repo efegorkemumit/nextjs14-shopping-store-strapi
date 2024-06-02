@@ -34,7 +34,7 @@
 - Store Github: https://github.com/efegorkemumit/nextjs14-shopping-store-strapi
 - Cms Github: https://github.com/efegorkemumit/cms-strapi-shoppping
 - NodeJs : https://github.com/efegorkemumit/nodejs-nextjs14-sanalpos-github
-- File : 
+- File : https://github.com/efegorkemumit/nextjs14-shopping-store-strapi/blob/master/public/ecommerce.rar
 
 
 
