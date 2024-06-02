@@ -18,6 +18,9 @@ import {
 import { Input } from "@/components/ui/input"
 import { useToast } from '@/components/ui/use-toast'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
+import { createOrder } from '@/actions/cart/createOrder'
+import { DeleteToCart } from '@/actions/cart/deleteToCart'
 
 const formSchema = z.object({
     name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -32,13 +35,18 @@ const formSchema = z.object({
 
 interface CheckoutFormProps{
   subtotal:string;
+  userId:string;
+  jwt:string;
 }
 
-const Checkoutform = ({subtotal}:CheckoutFormProps) => {
-    const { items } = useCartStore()
+const Checkoutform = ({subtotal,jwt,userId}:CheckoutFormProps) => {
+    const { items, fetchItems } = useCartStore()
     console.log(items);
     const [response, setResponse] = useState(null);
     const { toast } = useToast()
+
+    const router = useRouter();
+
 
 
 
@@ -132,10 +140,37 @@ const Checkoutform = ({subtotal}:CheckoutFormProps) => {
         setResponse(response.data);
 
         if(response.data.status === "success"){
+
+          const payload={
+            data:{
+              name:data.name,
+              address:data.address,
+              phone:data.phone,
+              userId:userId,
+              subtotal:subtotal,
+              paymentText:"Iyzico",
+              OrderItemList:items,
+            }
+          }
+
+          await createOrder(payload, jwt)
+
+          items.forEach((item,index)=>{
+            DeleteToCart(item.id, jwt).then(resp=>{
+
+            })
+          })
+
+
+
             toast({
               variant: "success",
               title: "Order Success",
             })
+
+            fetchItems(userId, jwt)
+
+            router.push("/my-order")
 
         }
         else{
