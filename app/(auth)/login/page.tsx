@@ -54,7 +54,7 @@ const LoginPage = () => {
         startSession(resp.user, resp.jwt);
         toast({
           variant:"success",
-          title: "Account Created",
+          title: "Login Success",
         })
         setLoader(false);
         router.push("/")
